@@ -11,3 +11,4 @@ public abstract class Person {
         return nationalIdCard;
     }
 }
+// this class stores and returns the student credentials

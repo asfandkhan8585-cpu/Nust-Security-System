@@ -5,3 +5,4 @@ public abstract class Department {
         return departmentName;
     }
 }
+// this class stores and return the student credentials
