@@ -1,3 +1,5 @@
+package com.campus.security.model;
+
 import java.time.LocalDateTime;
 
 public class Visitor extends Person {
@@ -8,3 +10,4 @@ public class Visitor extends Person {
         super(nationalIdCard, "Temporary Visitor");
     }
 }
+

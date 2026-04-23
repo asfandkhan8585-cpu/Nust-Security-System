@@ -1,3 +1,7 @@
+package com.campus.security.service;
+
+import com.campus.security.model.*;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -93,3 +97,4 @@ public class DatabaseHandler {
         }
     }
 }
+

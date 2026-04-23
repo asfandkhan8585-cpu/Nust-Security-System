@@ -1,3 +1,5 @@
+package com.campus.security.model;
+
 import java.time.LocalDateTime;
 
 public class Student extends Person {
@@ -35,3 +37,4 @@ public class Student extends Person {
         this.accommodationName = accommodationName;
     }
 }
+

@@ -1,3 +1,5 @@
+package com.campus.security.model;
+
 public abstract class Person {
     protected String nationalIdCard;
     protected String fullName;
