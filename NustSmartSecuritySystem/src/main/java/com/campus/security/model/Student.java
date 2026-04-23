@@ -3,26 +3,26 @@ package com.campus.security.model;
 import java.time.LocalDateTime;
 
 public class Student extends Person {
-    String fathersName;
-    String fieldOfStudy;
-    String contactNumber;
-    String universityRollNumber;
-    Department enrolledDepartment;
+    public String fathersName;
+    public String fieldOfStudy;
+    public String contactNumber;
+    public String universityRollNumber;
+    public Department enrolledDepartment;
 
-    String livingStatus;
-    String accommodationName;
+    public String livingStatus;
+    public String accommodationName;
 
     // Location Tracking
-    boolean isInsideCampus = false;
-    boolean isInsideDepartment = false;
-    boolean isInsideHostel = false;
+    public boolean isInsideCampus = false;
+    public boolean isInsideDepartment = false;
+    public boolean isInsideHostel = false;
 
-    String activeDepartmentLocation = "";
-    String activeHostelLocation = "";
+    public String activeDepartmentLocation = "";
+    public String activeHostelLocation = "";
 
-    LocalDateTime lastCampusEntry;
-    LocalDateTime lastDepartmentEntry;
-    LocalDateTime lastHostelEntry;
+    public LocalDateTime lastCampusEntry;
+    public LocalDateTime lastDepartmentEntry;
+    public LocalDateTime lastHostelEntry;
 
     public Student(String nationalIdCard, String fullName, String fathersName,
                    Department enrolledDepartment, String fieldOfStudy, String contactNumber,

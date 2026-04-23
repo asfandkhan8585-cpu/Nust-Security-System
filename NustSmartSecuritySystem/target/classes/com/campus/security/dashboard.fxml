@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.campus.security.controller.MainController">
+    
+    <left>
+        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #2c3e50;" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="20.0" left="10.0" right="10.0" top="40.0" />
+            </padding>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="NUST Security">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Text>
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showScanPanel" style="-fx-background-color: #34495e; -fx-text-fill: white;" text="Card Scanner" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showRegisterPanel" style="-fx-background-color: #34495e; -fx-text-fill: white;" text="Register Student" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showSearchPanel" style="-fx-background-color: #34495e; -fx-text-fill: white;" text="Live Tracking &amp; Search" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showVisitorPanel" style="-fx-background-color: #34495e; -fx-text-fill: white;" text="Visitor Management" />
+        </VBox>
+    </left>
+    
+    <center>
+        <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            
+            <!-- Scan Card Panel -->
+            <VBox fx:id="scanPanel" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: #ecf0f1;">
+                <Label text="Card Scanner Gate Terminal">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <Label text="Scan CNIC:" />
+                    <TextField fx:id="scanCnicField" promptText="Enter CNIC" />
+                </HBox>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <Label text="Location:" />
+                    <ComboBox fx:id="scanLocationCombo" prefWidth="150.0">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="MainGate" />
+                                <String fx:value="SEECS" />
+                                <String fx:value="SMME" />
+                                <String fx:value="NBS" />
+                                <String fx:value="S3H" />
+                                <String fx:value="SCME" />
+                                <String fx:value="ASAB" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </HBox>
+                <Button mnemonicParsing="false" onAction="#handleScanCard" text="Process Scan" />
+                <Label fx:id="scanResultLabel" text="Waiting for scan..." textFill="#555555" />
+            </VBox>
+            
+            <!-- Register Student Panel -->
+            <VBox fx:id="registerPanel" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: #ecf0f1;" visible="false">
+                <Label text="Student Registration">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
+                    <Label text="CNIC:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="regCnicField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    
+                    <Label text="Full Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="regNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    
+                    <Label text="CMS ID:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <TextField fx:id="regCmsField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    
+                    <Label text="Department:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <ComboBox fx:id="regDeptCombo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    
+                    <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <TextField fx:id="regPhoneField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                </GridPane>
+                <Button mnemonicParsing="false" onAction="#handleRegistration" text="Register" />
+                <Label fx:id="regResultLabel" text="" textFill="#27ae60" />
+            </VBox>
+            
+            <!-- Tracking & Search Panel -->
+            <VBox fx:id="searchPanel" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: #ecf0f1;" visible="false">
+                <Label text="Live Database Tracker">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <TextField fx:id="searchCnicField" promptText="Enter CNIC to search" />
+                    <Button mnemonicParsing="false" onAction="#handleSearch" text="Search" />
+                    <Button mnemonicParsing="false" onAction="#handleDeleteStudent" text="Delete Record" textFill="#c0392b" />
+                </HBox>
+                <TextArea fx:id="searchResultArea" editable="false" prefHeight="300.0" prefWidth="500.0" wrapText="true">
+                    <VBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                    </VBox.margin>
+                </TextArea>
+            </VBox>
+            
+            <!-- Visitor Log Panel -->
+            <VBox fx:id="visitorPanel" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: #ecf0f1;" visible="false">
+                <Label text="Visitor Management Log">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <TextField fx:id="visitorCnicField" promptText="Visitor CNIC" />
+                </HBox>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <Button mnemonicParsing="false" onAction="#handleVisitorEntry" text="Log Entry" />
+                    <Button mnemonicParsing="false" onAction="#handleVisitorExit" text="Log Exit" />
+                    <Button mnemonicParsing="false" onAction="#handleVisitorPayFine" text="Pay Fine" />
+                </HBox>
+                <Label fx:id="visitorResultLabel" text="Pending action..." />
+            </VBox>
+            
+        </StackPane>
+    </center>
+    
+</BorderPane>

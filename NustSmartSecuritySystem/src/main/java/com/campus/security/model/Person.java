@@ -1,8 +1,8 @@
 package com.campus.security.model;
 
 public abstract class Person {
-    protected String nationalIdCard;
-    protected String fullName;
+    public String nationalIdCard;
+    public String fullName;
 
     public Person(String nationalIdCard, String fullName) {
         this.nationalIdCard = nationalIdCard;

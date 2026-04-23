@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class DatabaseHandler {
     private final String DATA_FILE = "nust_student_records.txt";
 
-    public void saveRecords(ArrayList<Student> studentList) {
+    public boolean saveRecords(ArrayList<Student> studentList) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_FILE))) {
             for (int i = 0; i < studentList.size(); i++) {
                 Student s = studentList.get(i);
@@ -31,8 +31,9 @@ public class DatabaseHandler {
                 writer.write((s.activeDepartmentLocation.isEmpty() ? "none" : s.activeDepartmentLocation) + "\n");
                 writer.write((s.activeHostelLocation.isEmpty() ? "none" : s.activeHostelLocation) + "\n");
             }
+            return true;
         } catch (IOException error) {
-            System.out.println("Error saving to database: " + error.getMessage());
+            return false;
         }
     }
 
@@ -79,7 +80,7 @@ public class DatabaseHandler {
                 loadedData.add(s);
             }
         } catch (IOException error) {
-            System.out.println("Error loading database: " + error.getMessage());
+            // Error loading database is silently ignored to avoid console output
         }
         return loadedData;
     }

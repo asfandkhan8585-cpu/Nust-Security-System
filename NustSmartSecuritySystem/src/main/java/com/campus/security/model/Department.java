@@ -1,7 +1,7 @@
 package com.campus.security.model;
 
 public abstract class Department {
-    protected String departmentName;
+    public String departmentName;
 
     public String getDepartmentName() {
         return departmentName;
