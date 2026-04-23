@@ -83,15 +83,18 @@
                     
                     <Label text="Full Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <TextField fx:id="regNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label text="Father's Name:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <TextField fx:id="regFatherNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     
-                    <Label text="CMS ID:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                    <TextField fx:id="regCmsField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label text="CMS ID:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <TextField fx:id="regCmsField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     
-                    <Label text="Department:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                    <ComboBox fx:id="regDeptCombo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label text="Department:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <ComboBox fx:id="regDeptCombo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     
-                    <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                    <TextField fx:id="regPhoneField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                    <TextField fx:id="regPhoneField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 </GridPane>
                 <Button mnemonicParsing="false" onAction="#handleRegistration" text="Register" />
                 <Label fx:id="regResultLabel" text="" textFill="#27ae60" />

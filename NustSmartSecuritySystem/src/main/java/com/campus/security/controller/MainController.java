@@ -30,6 +30,7 @@ public class MainController {
     // Registration Components
     @FXML private TextField regCnicField;
     @FXML private TextField regNameField;
+    @FXML private TextField regFatherNameField;
     @FXML private TextField regCmsField;
     @FXML private TextField regPhoneField;
     @FXML private ComboBox<String> regDeptCombo;
@@ -103,20 +104,32 @@ public class MainController {
     void handleRegistration(ActionEvent event) {
         String cnic = regCnicField.getText().trim();
         String name = regNameField.getText().trim();
+        String fatherName = regFatherNameField.getText().trim();
         String cms = regCmsField.getText().trim();
         String phone = regPhoneField.getText().trim();
         String deptName = regDeptCombo.getValue();
 
-        if (cnic.isEmpty() || name.isEmpty() || cms.isEmpty() || deptName == null) {
+        if (cnic.isEmpty() || name.isEmpty() || fatherName.isEmpty() || cms.isEmpty() || deptName == null) {
             showAlert("Input Error", "Please fill out all required fields.");
             return;
         }
 
+        Department dept;
+        switch (deptName) {
+            case "SEECS": dept = new com.campus.security.model.SEECS(); break;
+            case "SMME": dept = new com.campus.security.model.SMME(); break;
+            case "NBS": dept = new com.campus.security.model.NBS(); break;
+            case "S3H": dept = new com.campus.security.model.S3H(); break;
+            case "ASAB": dept = new com.campus.security.model.ASAB(); break;
+            case "SCME": dept = new com.campus.security.model.SCME(); break;
+            default: dept = new com.campus.security.model.SCME(); break;
+        }
+
         Student student = new Student(
-            name, 
             cnic, 
-            "Not Specified", // father's name placeholder
-            null, // dept mapped later
+            name, 
+            fatherName, 
+            dept, 
             deptName, 
             phone, 
             cms, 
@@ -140,8 +153,8 @@ public class MainController {
 
         Student student = securityLogic.searchStudentByCnic(cnic);
         if (student != null) {
-            String details = String.format("Profile Layout:\nName: %s\nCMS: %s\nInside Campus: %b\n",
-                    student.fullName, student.universityRollNumber, student.isInsideCampus);
+            String details = String.format("Profile Layout:\nName: %s\nFather's Name: %s\nCMS: %s\nInside Campus: %b\n",
+                    student.fullName, student.fathersName, student.universityRollNumber, student.isInsideCampus);
             searchResultArea.setText(details);
         } else {
             searchResultArea.setText("Record not found for CNIC: " + cnic);
@@ -200,6 +213,7 @@ public class MainController {
     private void clearRegistrationFields() {
         regCnicField.clear();
         regNameField.clear();
+        regFatherNameField.clear();
         regCmsField.clear();
         regPhoneField.clear();
         regDeptCombo.getSelectionModel().clearSelection();
