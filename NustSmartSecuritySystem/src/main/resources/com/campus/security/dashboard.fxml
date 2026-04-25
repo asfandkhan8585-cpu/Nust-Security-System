@@ -95,6 +95,12 @@
                     
                     <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                     <TextField fx:id="regPhoneField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                    <Label text="Living Status:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                    <ComboBox fx:id="regLivingStatusCombo" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+                    <Label text="Hostel Name:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                    <TextField fx:id="regHostelNameField" promptText="If Hostelite" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                 </GridPane>
                 <Button mnemonicParsing="false" onAction="#handleRegistration" text="Register" />
                 <Label fx:id="regResultLabel" text="" textFill="#27ae60" />

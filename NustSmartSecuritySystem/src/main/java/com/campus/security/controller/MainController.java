@@ -34,6 +34,8 @@ public class MainController {
     @FXML private TextField regCmsField;
     @FXML private TextField regPhoneField;
     @FXML private ComboBox<String> regDeptCombo;
+    @FXML private ComboBox<String> regLivingStatusCombo;
+    @FXML private TextField regHostelNameField;
     @FXML private Label regResultLabel;
 
     // Search Components
@@ -47,6 +49,8 @@ public class MainController {
     @FXML
     public void initialize() {
         regDeptCombo.getItems().addAll("SEECS", "SMME", "NBS", "S3H", "SCME", "ASAB");
+        regLivingStatusCombo.getItems().addAll("Day Scholar", "Hostelite");
+        regLivingStatusCombo.getSelectionModel().selectFirst();
         scanLocationCombo.getSelectionModel().selectFirst();
     }
 
@@ -108,8 +112,16 @@ public class MainController {
         String cms = regCmsField.getText().trim();
         String phone = regPhoneField.getText().trim();
         String deptName = regDeptCombo.getValue();
+        String livingStatus = regLivingStatusCombo.getValue();
+        String hostelName = regHostelNameField.getText().trim();
 
-        if (cnic.isEmpty() || name.isEmpty() || fatherName.isEmpty() || cms.isEmpty() || deptName == null) {
+        if (livingStatus != null && livingStatus.equals("Day Scholar")) {
+            hostelName = "N/A";
+        } else if (hostelName.isEmpty()) {
+            hostelName = "N/A";
+        }
+
+        if (cnic.isEmpty() || name.isEmpty() || fatherName.isEmpty() || cms.isEmpty() || deptName == null || livingStatus == null) {
             showAlert("Input Error", "Please fill out all required fields.");
             return;
         }
@@ -133,8 +145,8 @@ public class MainController {
             deptName, 
             phone, 
             cms, 
-            "Day Scholar", 
-            "N/A"
+            livingStatus, 
+            hostelName
         );
 
         boolean success = securityLogic.registerNewStudent(student);
@@ -153,8 +165,29 @@ public class MainController {
 
         Student student = securityLogic.searchStudentByCnic(cnic);
         if (student != null) {
-            String details = String.format("Profile Layout:\nName: %s\nFather's Name: %s\nCMS: %s\nInside Campus: %b\n",
-                    student.fullName, student.fathersName, student.universityRollNumber, student.isInsideCampus);
+            String locationStatus = "Outside NUST";
+            String lastScanTime = "No recent scan (in this session)";
+
+            if (student.isInsideCampus) {
+                if (student.isInsideDepartment && !student.activeDepartmentLocation.isEmpty()) {
+                    locationStatus = "Inside " + student.activeDepartmentLocation;
+                    if (student.lastDepartmentEntry != null) {
+                        lastScanTime = student.lastDepartmentEntry.format(java.time.format.DateTimeFormatter.ofPattern("dd-MMM-yyyy hh:mm a"));
+                    }
+                } else {
+                    locationStatus = "Inside Campus (Main Gate / Grounds)";
+                    if (student.lastCampusEntry != null) {
+                        lastScanTime = student.lastCampusEntry.format(java.time.format.DateTimeFormatter.ofPattern("dd-MMM-yyyy hh:mm a"));
+                    }
+                }
+            } else {
+                if (student.lastCampusEntry != null) {
+                    lastScanTime = "Last Exited at: " + student.lastCampusEntry.format(java.time.format.DateTimeFormatter.ofPattern("dd-MMM-yyyy hh:mm a"));
+                }
+            }
+
+            String details = String.format("Profile Layout:\nName: %s\nFather's Name: %s\nDepartment: %s\nCMS ID: %s\nLiving Status: %s\nHostel Name: %s\n\n[Live Tracking]\nCurrent Location: %s\nLast Scan Time: %s",
+                    student.fullName, student.fathersName, student.enrolledDepartment.getDepartmentName(), student.universityRollNumber, student.livingStatus, student.accommodationName, locationStatus, lastScanTime);
             searchResultArea.setText(details);
         } else {
             searchResultArea.setText("Record not found for CNIC: " + cnic);
@@ -217,6 +250,8 @@ public class MainController {
         regCmsField.clear();
         regPhoneField.clear();
         regDeptCombo.getSelectionModel().clearSelection();
+        regHostelNameField.clear();
+        regLivingStatusCombo.getSelectionModel().selectFirst();
     }
 
     private void showAlert(String title, String content) {

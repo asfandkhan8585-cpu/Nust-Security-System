@@ -63,7 +63,7 @@ public class SecurityLogic {
     }
 
 
-    // --- STUDENT MANAGEMENT (Unchanged) ---
+    // --- STUDENT MANAGEMENT ---
 
     public boolean registerNewStudent(Student newStudent) {
         registeredStudents.add(newStudent);
@@ -118,24 +118,28 @@ public class SecurityLogic {
                 targetStudent.isInsideCampus = false;
                 targetStudent.isInsideDepartment = false;
                 targetStudent.isInsideHostel = false;
+                targetStudent.lastCampusEntry = LocalDateTime.now();
                 resultMessage = "EXIT RECORDED - NUST MAIN GATE | Name: " + targetStudent.fullName;
             } else {
                 targetStudent.isInsideCampus = true;
                 targetStudent.lastCampusEntry = LocalDateTime.now();
                 resultMessage = "ENTRY RECORDED - NUST MAIN GATE | Name: " + targetStudent.fullName;
             }
-        } else if (scanLocation.startsWith("Dept_")) {
+        } else {
+            // It's a department or hostel location
             if (!targetStudent.isInsideCampus) {
                 resultMessage = "ACCESS DENIED: Student must enter NUST Main Gate first!";
             } else {
-                String specificDept = scanLocation.replace("Dept_", "");
+                String specificDept = scanLocation; // location is directly the department name from ComboBox
                 if (targetStudent.isInsideDepartment && targetStudent.activeDepartmentLocation.equals(specificDept)) {
                     targetStudent.isInsideDepartment = false;
                     targetStudent.activeDepartmentLocation = "";
+                    targetStudent.lastDepartmentEntry = LocalDateTime.now();
                     resultMessage = "EXIT RECORDED - " + specificDept + " | Name: " + targetStudent.fullName;
                 } else {
                     targetStudent.isInsideDepartment = true;
                     targetStudent.activeDepartmentLocation = specificDept;
+                    targetStudent.lastDepartmentEntry = LocalDateTime.now();
                     resultMessage = "ENTRY RECORDED - " + specificDept + " | Name: " + targetStudent.fullName;
                 }
             }

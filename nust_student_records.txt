@@ -1,42 +1,14 @@
-M Hamza
 14201-7596656-5
-Not Specified
-SCME
-null
-null
-null
-null
-null
-false
-false
-false
-none
-none
-Hamza
-14201-7596656-5
-Not Specified
-SCME
-null
-null
-null
-null
-null
-false
-false
-false
-none
-none
-1234321
 M Hamza
 Farid
 SEECS
 SEECS
-123
+03119526322
 553436
 Day Scholar
 N/A
 true
+true
 false
-false
-none
+SMME
 none

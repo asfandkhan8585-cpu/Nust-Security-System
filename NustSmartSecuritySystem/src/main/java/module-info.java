@@ -1,4 +1,6 @@
 module com.campus.security {
+    requires javafx.base;
+    requires javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
 

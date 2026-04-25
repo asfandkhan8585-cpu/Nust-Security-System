@@ -33,6 +33,8 @@ public class DatabaseHandler {
             }
             return true;
         } catch (IOException error) {
+            System.err.println("Error saving to database: " + error.getMessage());
+            error.printStackTrace();
             return false;
         }
     }
@@ -80,7 +82,8 @@ public class DatabaseHandler {
                 loadedData.add(s);
             }
         } catch (IOException error) {
-            // Error loading database is silently ignored to avoid console output
+            System.err.println("Error loading from database: " + error.getMessage());
+            error.printStackTrace();
         }
         return loadedData;
     }
