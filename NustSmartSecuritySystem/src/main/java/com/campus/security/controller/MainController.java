@@ -45,6 +45,7 @@ public class MainController {
     // Visitor Components
     @FXML private TextField visitorCnicField;
     @FXML private Label visitorResultLabel;
+    @FXML private TextArea visitorListArea;
 
     @FXML
     public void initialize() {
@@ -86,6 +87,7 @@ public class MainController {
         registerPanel.setVisible(false);
         searchPanel.setVisible(false);
         visitorPanel.setVisible(true);
+        refreshVisitorList();
     }
 
     // --- Functional Handlers ---
@@ -219,6 +221,7 @@ public class MainController {
         Visitor visitor = securityLogic.logVisitorEntry(cnic);
         if (visitor != null) {
             visitorResultLabel.setText("Visitor entry logged for CNIC " + cnic);
+            refreshVisitorList();
         } else {
             showAlert("Error", "Failed to log visitor entry.");
         }
@@ -232,6 +235,8 @@ public class MainController {
 
         String result = securityLogic.logVisitorExit(cnic, false);
         visitorResultLabel.setText(result);
+        refreshVisitorList();
+        visitorCnicField.clear();
     }
 
     @FXML
@@ -241,6 +246,34 @@ public class MainController {
 
         String result = securityLogic.logVisitorExit(cnic, true);
         visitorResultLabel.setText(result);
+        refreshVisitorList();
+        visitorCnicField.clear();
+    }
+
+    private void refreshVisitorList() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("--- ACTIVE VISITORS ---\n");
+        var active = securityLogic.getActiveVisitors();
+        if (active.isEmpty()) {
+            sb.append("No active visitors.\n");
+        } else {
+            for (com.campus.security.model.Visitor v : active) {
+                sb.append("CNIC: ").append(v.getNationalIdCard())
+                  .append(" | Entry: ").append(v.timeOfEntry.format(java.time.format.DateTimeFormatter.ofPattern("hh:mm a"))).append("\n");
+            }
+        }
+
+        sb.append("\n--- LATE LEAVERS (FINE PENDING) ---\n");
+        var late = securityLogic.getLateLeavers();
+        if (late.isEmpty()) {
+            sb.append("No late leavers.\n");
+        } else {
+            for (com.campus.security.model.Visitor v : late) {
+                sb.append("CNIC: ").append(v.getNationalIdCard())
+                  .append(" | Entry: ").append(v.timeOfEntry.format(java.time.format.DateTimeFormatter.ofPattern("hh:mm a"))).append("\n");
+            }
+        }
+        visitorListArea.setText(sb.toString());
     }
 
     private void clearRegistrationFields() {

@@ -141,6 +141,8 @@
                     <Button mnemonicParsing="false" onAction="#handleVisitorPayFine" text="Pay Fine" />
                 </HBox>
                 <Label fx:id="visitorResultLabel" text="Pending action..." />
+                <Label text="Logged Visitors:" />
+                <TextArea fx:id="visitorListArea" editable="false" prefHeight="250.0" prefWidth="400.0" promptText="List of active visitors and late leavers will appear here..." />
             </VBox>
             
         </StackPane>

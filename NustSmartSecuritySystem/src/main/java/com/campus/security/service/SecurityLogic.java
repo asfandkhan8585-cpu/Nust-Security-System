@@ -63,6 +63,14 @@ public class SecurityLogic {
     }
 
 
+    public ArrayList<Visitor> getActiveVisitors() {
+        return activeVisitors;
+    }
+
+    public ArrayList<Visitor> getLateLeavers() {
+        return lateLeavers;
+    }
+
     // --- STUDENT MANAGEMENT ---
 
     public boolean registerNewStudent(Student newStudent) {
