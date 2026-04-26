@@ -138,17 +138,35 @@ public class SecurityLogic {
             if (!targetStudent.isInsideCampus) {
                 resultMessage = "ACCESS DENIED: Student must enter NUST Main Gate first!";
             } else {
-                String specificDept = scanLocation; // location is directly the department name from ComboBox
-                if (targetStudent.isInsideDepartment && targetStudent.activeDepartmentLocation.equals(specificDept)) {
-                    targetStudent.isInsideDepartment = false;
-                    targetStudent.activeDepartmentLocation = "";
-                    targetStudent.lastDepartmentEntry = LocalDateTime.now();
-                    resultMessage = "EXIT RECORDED - " + specificDept + " | Name: " + targetStudent.fullName;
+                if (scanLocation.endsWith("Hostel")) {
+                    if ("Day Scholar".equalsIgnoreCase(targetStudent.livingStatus) || "External Hostelite".equalsIgnoreCase(targetStudent.livingStatus)) {
+                        return "ACCESS DENIED: Day Scholars and External Hostelites are not allowed in Hostels!";
+                    }
+                    String specificHostel = scanLocation;
+                    if (targetStudent.isInsideHostel && targetStudent.activeHostelLocation.equals(specificHostel)) {
+                        targetStudent.isInsideHostel = false;
+                        targetStudent.activeHostelLocation = "";
+                        targetStudent.lastHostelEntry = LocalDateTime.now();
+                        resultMessage = "EXIT RECORDED - " + specificHostel + " | Name: " + targetStudent.fullName;
+                    } else {
+                        targetStudent.isInsideHostel = true;
+                        targetStudent.activeHostelLocation = specificHostel;
+                        targetStudent.lastHostelEntry = LocalDateTime.now();
+                        resultMessage = "ENTRY RECORDED - " + specificHostel + " | Name: " + targetStudent.fullName;
+                    }
                 } else {
-                    targetStudent.isInsideDepartment = true;
-                    targetStudent.activeDepartmentLocation = specificDept;
-                    targetStudent.lastDepartmentEntry = LocalDateTime.now();
-                    resultMessage = "ENTRY RECORDED - " + specificDept + " | Name: " + targetStudent.fullName;
+                    String specificDept = scanLocation; // location is directly the department name from ComboBox
+                    if (targetStudent.isInsideDepartment && targetStudent.activeDepartmentLocation.equals(specificDept)) {
+                        targetStudent.isInsideDepartment = false;
+                        targetStudent.activeDepartmentLocation = "";
+                        targetStudent.lastDepartmentEntry = LocalDateTime.now();
+                        resultMessage = "EXIT RECORDED - " + specificDept + " | Name: " + targetStudent.fullName;
+                    } else {
+                        targetStudent.isInsideDepartment = true;
+                        targetStudent.activeDepartmentLocation = specificDept;
+                        targetStudent.lastDepartmentEntry = LocalDateTime.now();
+                        resultMessage = "ENTRY RECORDED - " + specificDept + " | Name: " + targetStudent.fullName;
+                    }
                 }
             }
         }

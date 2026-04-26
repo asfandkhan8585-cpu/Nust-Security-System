@@ -8,7 +8,21 @@ SEECS
 Day Scholar
 N/A
 true
-true
+false
 false
 SEECS
+none
+38301-9377160-1
+Asfand
+Zabihullah
+SEECS
+SEECS
+03024172835
+554959
+External Hostelite
+Sarmad Boys Hostel
+true
+false
+false
+none
 none

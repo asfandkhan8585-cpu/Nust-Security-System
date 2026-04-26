@@ -48,7 +48,7 @@
                 </Label>
                 <HBox alignment="CENTER" spacing="10.0">
                     <Label text="Scan CNIC:" />
-                    <TextField fx:id="scanCnicField" promptText="Enter CNIC" />
+                    <TextField fx:id="scanCnicField" promptText="Enter CNIC" onAction="#handleScanCard" />
                 </HBox>
                 <HBox alignment="CENTER" spacing="10.0">
                     <Label text="Location:" />
@@ -62,11 +62,24 @@
                                 <String fx:value="S3H" />
                                 <String fx:value="SCME" />
                                 <String fx:value="ASAB" />
+                                <String fx:value="Fatima Hostel" />
+                                <String fx:value="Zainab Hostel" />
+                                <String fx:value="Khadijah Hostel" />
+                                <String fx:value="Ayesha Hostel" />
+                                <String fx:value="Amna Hostel" />
+                                <String fx:value="Ghazali Hostel" />
+                                <String fx:value="Beruni Hostel" />
+                                <String fx:value="Razi Hostel" />
+                                <String fx:value="Rahmat Hostel" />
+                                <String fx:value="Attar Hostel" />
+                                <String fx:value="Liaquat Hostel" />
+                                <String fx:value="Hajveri Hostel" />
+                                <String fx:value="Zakariya Hostel" />
                             </FXCollections>
                         </items>
                     </ComboBox>
                 </HBox>
-                <Button mnemonicParsing="false" onAction="#handleScanCard" text="Process Scan" />
+                <!-- Manual scan button removed for Enter-key auto processing -->
                 <Label fx:id="scanResultLabel" text="Waiting for scan..." textFill="#555555" />
             </VBox>
             
@@ -100,7 +113,10 @@
                     <ComboBox fx:id="regLivingStatusCombo" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
                     <Label text="Hostel Name:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                    <TextField fx:id="regHostelNameField" promptText="If Hostelite" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                    <StackPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <TextField fx:id="regHostelNameField" promptText="External Hostel Name" visible="false" managed="false" />
+                        <ComboBox fx:id="regInternalHostelCombo" promptText="Select NUST Hostel" prefWidth="150.0" visible="false" managed="false" />
+                    </StackPane>
                 </GridPane>
                 <Button mnemonicParsing="false" onAction="#handleRegistration" text="Register" />
                 <Label fx:id="regResultLabel" text="" textFill="#27ae60" />

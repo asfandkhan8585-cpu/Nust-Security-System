@@ -36,6 +36,7 @@ public class MainController {
     @FXML private ComboBox<String> regDeptCombo;
     @FXML private ComboBox<String> regLivingStatusCombo;
     @FXML private TextField regHostelNameField;
+    @FXML private ComboBox<String> regInternalHostelCombo;
     @FXML private Label regResultLabel;
 
     // Search Components
@@ -50,9 +51,31 @@ public class MainController {
     @FXML
     public void initialize() {
         regDeptCombo.getItems().addAll("SEECS", "SMME", "NBS", "S3H", "SCME", "ASAB");
-        regLivingStatusCombo.getItems().addAll("Day Scholar", "Hostelite");
+        regLivingStatusCombo.getItems().addAll("Day Scholar", "Hostelite", "External Hostelite");
+        regInternalHostelCombo.getItems().addAll("Fatima Hostel", "Zainab Hostel", "Khadijah Hostel", "Ayesha Hostel", "Amna Hostel", "Ghazali Hostel", "Beruni Hostel", "Razi Hostel", "Rahmat Hostel", "Attar Hostel", "Liaquat Hostel", "Hajveri Hostel", "Zakariya Hostel");
+        
         regLivingStatusCombo.getSelectionModel().selectFirst();
         scanLocationCombo.getSelectionModel().selectFirst();
+        
+        // Add listener to toggle visibility of hostel fields
+        regLivingStatusCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if ("Hostelite".equals(newValue)) {
+                regInternalHostelCombo.setVisible(true);
+                regInternalHostelCombo.setManaged(true);
+                regHostelNameField.setVisible(false);
+                regHostelNameField.setManaged(false);
+            } else if ("External Hostelite".equals(newValue)) {
+                regInternalHostelCombo.setVisible(false);
+                regInternalHostelCombo.setManaged(false);
+                regHostelNameField.setVisible(true);
+                regHostelNameField.setManaged(true);
+            } else {
+                regInternalHostelCombo.setVisible(false);
+                regInternalHostelCombo.setManaged(false);
+                regHostelNameField.setVisible(false);
+                regHostelNameField.setManaged(false);
+            }
+        });
     }
 
     // --- Panel Navigation Methods ---
@@ -115,12 +138,15 @@ public class MainController {
         String phone = regPhoneField.getText().trim();
         String deptName = regDeptCombo.getValue();
         String livingStatus = regLivingStatusCombo.getValue();
-        String hostelName = regHostelNameField.getText().trim();
-
-        if (livingStatus != null && livingStatus.equals("Day Scholar")) {
-            hostelName = "N/A";
-        } else if (hostelName.isEmpty()) {
-            hostelName = "N/A";
+        
+        String hostelName = "N/A";
+        if ("Hostelite".equals(livingStatus)) {
+            hostelName = regInternalHostelCombo.getValue() != null ? regInternalHostelCombo.getValue() : "N/A";
+        } else if ("External Hostelite".equals(livingStatus)) {
+            hostelName = regHostelNameField.getText().trim();
+            if (hostelName.isEmpty()) {
+                hostelName = "N/A";
+            }
         }
 
         if (cnic.isEmpty() || name.isEmpty() || fatherName.isEmpty() || cms.isEmpty() || deptName == null || livingStatus == null) {
@@ -284,6 +310,7 @@ public class MainController {
         regPhoneField.clear();
         regDeptCombo.getSelectionModel().clearSelection();
         regHostelNameField.clear();
+        regInternalHostelCombo.getSelectionModel().clearSelection();
         regLivingStatusCombo.getSelectionModel().selectFirst();
     }
 

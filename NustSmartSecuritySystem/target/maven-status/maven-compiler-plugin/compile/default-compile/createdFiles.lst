@@ -1,7 +1,6 @@
 com\campus\security\model\Department.class
 com\campus\security\model\ASAB.class
 com\campus\security\controller\MainController.class
-com\campus\security\SystemInfo.class
 com\campus\security\model\NBS.class
 com\campus\security\model\Student.class
 com\campus\security\App.class
