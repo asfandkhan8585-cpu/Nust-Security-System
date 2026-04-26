@@ -33,6 +33,7 @@
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showRegisterPanel" style="-fx-background-color: #34495e; -fx-text-fill: white;" text="Register Student" />
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showSearchPanel" style="-fx-background-color: #34495e; -fx-text-fill: white;" text="Live Tracking &amp; Search" />
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showVisitorPanel" style="-fx-background-color: #34495e; -fx-text-fill: white;" text="Visitor Management" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showStatsPanel" style="-fx-background-color: #34495e; -fx-text-fill: white;" text="System Stats" />
         </VBox>
     </left>
     

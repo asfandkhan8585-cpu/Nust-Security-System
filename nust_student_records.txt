@@ -22,7 +22,7 @@ SEECS
 External Hostelite
 Sarmad Boys Hostel
 true
+true
 false
-false
-none
+NBS
 none
