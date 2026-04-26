@@ -21,6 +21,7 @@ public class MainController {
     @FXML private VBox registerPanel;
     @FXML private VBox searchPanel;
     @FXML private VBox visitorPanel;
+    @FXML private VBox statsPanel;
 
     // Scan Components
     @FXML private TextField scanCnicField;
@@ -47,6 +48,9 @@ public class MainController {
     @FXML private TextField visitorCnicField;
     @FXML private Label visitorResultLabel;
     @FXML private TextArea visitorListArea;
+
+    // Stats Components
+    @FXML private TextArea statsTextArea;
 
     @FXML
     public void initialize() {
@@ -86,6 +90,7 @@ public class MainController {
         registerPanel.setVisible(false);
         searchPanel.setVisible(false);
         visitorPanel.setVisible(false);
+        statsPanel.setVisible(false);
     }
 
     @FXML
@@ -94,6 +99,7 @@ public class MainController {
         registerPanel.setVisible(true);
         searchPanel.setVisible(false);
         visitorPanel.setVisible(false);
+        statsPanel.setVisible(false);
     }
 
     @FXML
@@ -102,6 +108,7 @@ public class MainController {
         registerPanel.setVisible(false);
         searchPanel.setVisible(true);
         visitorPanel.setVisible(false);
+        statsPanel.setVisible(false);
     }
 
     @FXML
@@ -110,7 +117,22 @@ public class MainController {
         registerPanel.setVisible(false);
         searchPanel.setVisible(false);
         visitorPanel.setVisible(true);
+        statsPanel.setVisible(false);
         refreshVisitorList();
+    }
+
+    @FXML
+    void showStatsPanel(ActionEvent event) {
+        scanPanel.setVisible(false);
+        registerPanel.setVisible(false);
+        searchPanel.setVisible(false);
+        visitorPanel.setVisible(false);
+        statsPanel.setVisible(true);
+        refreshStats();
+    }
+
+    private void refreshStats() {
+        statsTextArea.setText(securityLogic.generateSystemStats());
     }
 
     // --- Functional Handlers ---

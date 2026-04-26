@@ -3,10 +3,12 @@ package com.campus.security.service;
 import com.campus.security.model.*;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class DatabaseHandler {
     private final String DATA_FILE = "nust_student_records.txt";
+    private final String VISITOR_FILE = "nust_visitor_records.txt";
 
     public boolean saveRecords(ArrayList<Student> studentList) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_FILE))) {
@@ -86,6 +88,54 @@ public class DatabaseHandler {
             error.printStackTrace();
         }
         return loadedData;
+    }
+
+    public boolean saveVisitors(ArrayList<Visitor> active, ArrayList<Visitor> late, int totalFines) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(VISITOR_FILE))) {
+            writer.write(totalFines + "\n");
+            writer.write(active.size() + "\n");
+            for (Visitor v : active) {
+                writer.write(v.getNationalIdCard() + "\n");
+                writer.write((v.timeOfEntry != null ? v.timeOfEntry.toString() : "") + "\n");
+            }
+            writer.write(late.size() + "\n");
+            for (Visitor v : late) {
+                writer.write(v.getNationalIdCard() + "\n");
+                writer.write((v.timeOfEntry != null ? v.timeOfEntry.toString() : "") + "\n");
+            }
+            return true;
+        } catch (IOException error) {
+            System.err.println("Error saving visitors: " + error.getMessage());
+            return false;
+        }
+    }
+
+    public void loadVisitors(ArrayList<Visitor> active, ArrayList<Visitor> late, int[] fines) {
+        File file = new File(VISITOR_FILE);
+        if (!file.exists()) return;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(VISITOR_FILE))) {
+            fines[0] = Integer.parseInt(reader.readLine());
+            
+            int activeCount = Integer.parseInt(reader.readLine());
+            for (int i = 0; i < activeCount; i++) {
+                Visitor v = new Visitor(reader.readLine());
+                String time = reader.readLine();
+                v.timeOfEntry = time.isEmpty() ? null : LocalDateTime.parse(time);
+                active.add(v);
+            }
+
+            int lateCount = Integer.parseInt(reader.readLine());
+            for (int i = 0; i < lateCount; i++) {
+                Visitor v = new Visitor(reader.readLine());
+                String time = reader.readLine();
+                v.timeOfEntry = time.isEmpty() ? null : LocalDateTime.parse(time);
+                v.hasOverstayed = true;
+                late.add(v);
+            }
+        } catch (Exception error) {
+            System.err.println("Error loading visitors: " + error.getMessage());
+        }
     }
 
     private Department resolveDepartment(String deptName) {
